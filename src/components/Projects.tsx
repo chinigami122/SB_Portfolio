@@ -32,7 +32,7 @@ const projectsData: Record<string, Project[]> = {
       category: "Web Development",
       description: "My personal portfolio built with React and Tailwind CSS.",
       image: "/azerty.webp",
-      link: "https://github.com/chinigami122/Portfolio/tree/main/portfolio-next",
+      link: "https://github.com/chinigami122/SB_Portfolio",
     },
     {
       title: "E-commerce Dashboard",
