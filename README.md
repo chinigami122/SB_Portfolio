@@ -69,7 +69,7 @@ To get a local copy up and running follow these simple steps.
    npm run dev
    ```
 
-## 📧 EmailJS Setup (Contact Form)
+<!-- ## 📧 EmailJS Setup (Contact Form)
 
 The contact form is currently running a simulated "success" timeout. To actually receive emails:
 
@@ -95,7 +95,7 @@ The contact form is currently running a simulated "success" timeout. To actually
      )
      .then(() => setStatus("success"))
      .catch(() => setStatus("error"));
-   ```
+   ``` -->
 
 ## 🤝 Let's Connect
 
