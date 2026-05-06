@@ -1,144 +1,122 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function About() {
-  const [activeTab, setActiveTab] = useState("education");
-
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-  };
-
   return (
-    <section id="about" className="py-20 bg-black text-[#faebd7]">
+    <section id="about" className="py-20 bg-[var(--color-background)] text-[var(--color-foreground)] relative">
       <div className="container mx-auto px-6 md:px-20">
-        <div className="flex flex-col md:flex-row justify-between flex-wrap">
-          <div className="w-full md:w-[30%] mb-10 md:mb-0">
-            <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden">
-              <img 
-                src="/image (1).webp" 
-                alt="Soufiane Bouziani" 
-                className="w-full h-full object-cover rounded-2xl"
-              />
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold">
+            <span className="bg-gradient-to-r from-[var(--color-accent)] to-[#ffa99f] bg-clip-text text-transparent">
+              About Me
+            </span>
+          </h2>
+        </motion.div>
+
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
+          
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="w-full lg:w-2/5 flex justify-center"
+          >
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-2 bg-gradient-to-tr from-[var(--color-accent)] to-purple-600 shadow-[0_0_40px_rgba(255,90,60,0.3)]">
+              <div className="w-full h-full rounded-full overflow-hidden bg-[var(--color-background)] border-4 border-[var(--color-background)]">
+                <img 
+                  src="/profile.png" 
+                  alt="Soufiane Bouziani" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback if profile.png is not found
+                    (e.target as HTMLImageElement).src = "/image (1).webp";
+                  }}
+                />
+              </div>
+              {/* Floating badges */}
+              <motion.div 
+                animate={{ y: [-10, 10, -10] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                className="absolute -top-4 -right-4 bg-[var(--color-card)] backdrop-blur-md border border-[var(--color-card-border)] p-3 rounded-2xl shadow-xl"
+              >
+                <span className="text-2xl">🐍</span>
+              </motion.div>
+              <motion.div 
+                animate={{ y: [10, -10, 10] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-4 -left-4 bg-[var(--color-card)] backdrop-blur-md border border-[var(--color-card-border)] p-3 rounded-2xl shadow-xl"
+              >
+                <span className="text-2xl">⚡</span>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="w-full md:w-[65%]">
-            <h1 className="text-4xl font-bold mb-6">About Me</h1>
-            <p className="text-lg leading-relaxed mb-8 text-gray-300">
-              I'm Soufiane Bouziani, a versatile professional with a passion for
-              technology and problem-solving. With expertise in Python, Front End
-              development, and MySQL, I bring a well-rounded skill set that
-              bridges the gap between data management and user-centric design. My
-              experience includes building dynamic web applications, designing
-              intuitive user interfaces, and managing robust databases. I leverage
-              my technical skills to create seamless and efficient solutions,
-              whether it's developing interactive front-end experiences or
-              optimizing database performance. I'm constantly expanding my
-              knowledge and seeking opportunities to apply my expertise in Python,
-              Front End development, and MySQL to deliver innovative and impactful
-              solutions.
-            </p>
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="w-full lg:w-3/5"
+          >
+            <div className="space-y-6 text-lg leading-relaxed opacity-80">
+              <p>
+                I'm a <span className="font-semibold text-[var(--color-accent)]">Data & Full-Stack Engineering</span> student
+                at ENSA Al Hoceima, building real systems across the full stack —
+                from real-time data pipelines to production-ready APIs and web products.
+              </p>
 
-            <div className="flex space-x-8 mb-8 border-b border-gray-700 pb-2">
-              {["education", "skills", "experience"].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => handleTabClick(tab)}
-                  className={`text-lg font-medium capitalize relative pb-2 transition-colors ${
-                    activeTab === tab ? "text-[#ff6347]" : "text-[#faebd7]"
-                  }`}
-                >
-                  {tab}
-                  {activeTab === tab && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute bottom-0 left-0 w-1/2 h-[3px] bg-[#ff6347]"
-                    />
-                  )}
-                </button>
-              ))}
+              <p>
+                My core stack spans <span className="font-semibold text-[var(--color-accent)]">Python</span>,{" "}
+                <span className="font-semibold text-[var(--color-accent)]">SQL</span>,{" "}
+                <span className="font-semibold text-[var(--color-accent)]">Apache Kafka</span>,{" "}
+                <span className="font-semibold text-[var(--color-accent)]">dbt</span>, and{" "}
+                <span className="font-semibold text-[var(--color-accent)]">Apache Airflow</span> on the data side,
+                paired with <span className="font-semibold text-[var(--color-accent)]">Spring Boot</span> and{" "}
+                <span className="font-semibold text-[var(--color-accent)]">React</span> for backend and frontend work.
+                I thrive at the intersection of data engineering and software development,
+                turning raw data into actionable insights and clean interfaces.
+              </p>
+
+              <p>
+                Whether it's architecting a{" "}
+                <span className="font-semibold text-[var(--color-accent)]">Medallion Architecture</span> lakehouse
+                processing 50K+ orders a day, designing secured{" "}
+                <span className="font-semibold text-[var(--color-accent)]">REST APIs</span> with JWT and RBAC,
+                or building responsive UIs with TypeScript and Chakra UI — I focus on solutions
+                that are not just functional, but engineered to last.
+              </p>
+
+              <p>
+                I'm constantly pushing into new territory:{" "}
+                <span className="font-semibold text-[var(--color-accent)]">distributed computing</span>,{" "}
+                <span className="font-semibold text-[var(--color-accent)]">cloud infrastructure</span>, machine learning,
+                and real-time systems. Every project is an opportunity to go deeper and build
+                something that actually matters.
+              </p>
+            </div>
+                        
+            <div className="mt-10 grid grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="p-4 bg-[var(--color-card)] rounded-xl border border-[var(--color-card-border)]">
+                <h4 className="text-[var(--color-accent)] font-bold text-2xl mb-1">2+</h4>
+                <p className="text-sm opacity-70">Years of Coding</p>
+              </div>
+              <div className="p-4 bg-[var(--color-card)] rounded-xl border border-[var(--color-card-border)]">
+                <h4 className="text-[var(--color-accent)] font-bold text-2xl mb-1">10+</h4>
+                <p className="text-sm opacity-70">Projects Completed</p>
+              </div>
             </div>
 
-            <div className="min-h-[200px]">
-              {activeTab === "education" && (
-                <motion.ul
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-4"
-                >
-                  <li>
-                    <span className="text-[#ff6347] text-sm block mb-1">
-                      2024 - Current
-                    </span>
-                    <span className="text-[#b66262] font-semibold block">
-                      First year Data Engineering student
-                    </span>
-                    National School of Applied Science of Al Hoceima (ENSAH)
-                  </li>
-                  <li>
-                    <span className="text-[#ff6347] text-sm block mb-1">
-                      2022 - 2024
-                    </span>
-                    <span className="text-[#b66262] font-semibold block">
-                      Preparatory Classes in Mathematics and Physics
-                    </span>
-                    National School of Applied Science of Al Hoceima (ENSAH)
-                  </li>
-                  <li>
-                    <span className="text-[#ff6347] text-sm block mb-1">
-                      2019 - 2022
-                    </span>
-                    <span className="text-[#b66262] font-semibold block">
-                      High School Diploma in physical Science
-                    </span>
-                    Meknes, Morroco
-                  </li>
-                </motion.ul>
-              )}
+          </motion.div>
 
-              {activeTab === "skills" && (
-                <motion.ul
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-4"
-                >
-                  <li>
-                    <a
-                      href="#skills"
-                      className="text-[#ff6347] hover:text-[#a52a2a] transition-colors"
-                    >
-                      Click here to view detailed skills section
-                    </a>
-                  </li>
-                </motion.ul>
-              )}
-
-              {activeTab === "experience" && (
-                <motion.ul
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-6"
-                >
-                  <li>
-                    <span className="text-[#ff6347] text-sm block mb-1">
-                      3 Months Internship
-                    </span>
-                    <span className="text-[#b66262] font-semibold block text-lg">
-                      Front-End Developer Intern
-                    </span>
-                    <span className="text-gray-300 block mb-2">Shiftbricks</span>
-                    <p className="text-sm text-gray-400 leading-relaxed">
-                      Joined Shiftbricks with a mission to turn lines of code into meaningful products.
-                      <br />
-                      <span className="block mt-2">• Built the showcase website for the AI-powered accounting solution <strong>Metadooc</strong> using HTML, CSS, JavaScript, and Bootstrap.</span>
-                      <span className="block mt-1">• Explored modern front-end development with <strong>React, TypeScript, and Chakra UI</strong>.</span>
-                      <span className="block mt-1">• Gained experience in product evolution, balancing design with functionality, and working in a fast-paced startup environment.</span>
-                    </p>
-                  </li>
-                </motion.ul>
-              )}
-            </div>
-          </div>
         </div>
       </div>
     </section>

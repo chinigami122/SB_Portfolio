@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Project = {
   title: string;
@@ -7,6 +7,7 @@ type Project = {
   description: string;
   image: string;
   link: string;
+  tags: string[];
 };
 
 const projectsData: Record<string, Project[]> = {
@@ -17,6 +18,7 @@ const projectsData: Record<string, Project[]> = {
       description: "A scalable data lakehouse ingestion and transformation pipeline using HDFS, Trino, and PostgreSQL to process and model retail procurement data across Bronze → Silver → Gold layers.",
       image: "/architecture.png",
       link: "https://github.com/chinigami122/BigData",
+      tags: ["HDFS", "Trino", "PostgreSQL", "Python"],
     },
     {
       title: "Data Warehouse",
@@ -24,15 +26,17 @@ const projectsData: Record<string, Project[]> = {
       description: "Designed a star schema data warehouse for analytics.",
       image: "/azerty.webp",
       link: "#",
+      tags: ["SQL", "ETL", "Data Modeling"],
     },
   ],
   "Web Development": [
     {
       title: "Portfolio Website",
       category: "Web Development",
-      description: "My personal portfolio built with React and Tailwind CSS.",
+      description: "My personal portfolio built with React and Tailwind CSS. Showcasing my projects and skills.",
       image: "/azerty.webp",
       link: "https://github.com/chinigami122/SB_Portfolio",
+      tags: ["React", "Tailwind CSS", "Framer Motion"],
     },
     {
       title: "E-commerce Dashboard",
@@ -40,6 +44,7 @@ const projectsData: Record<string, Project[]> = {
       description: "Admin dashboard for managing products and orders.",
       image: "/azerty.webp",
       link: "#",
+      tags: ["Next.js", "TypeScript", "Prisma"],
     },
   ],
   "Automation Scripts": [
@@ -49,6 +54,7 @@ const projectsData: Record<string, Project[]> = {
       description: "Python script to scrape data from multiple websites.",
       image: "/azerty.webp",
       link: "#",
+      tags: ["Python", "BeautifulSoup", "Selenium"],
     },
     {
       title: "File Organizer",
@@ -56,6 +62,7 @@ const projectsData: Record<string, Project[]> = {
       description: "Automated script to organize files by type and date.",
       image: "/azerty.webp",
       link: "#",
+      tags: ["Python", "OS", "Bash"],
     },
   ],
 };
@@ -65,78 +72,96 @@ export default function Projects() {
   const [activeTab, setActiveTab] = useState(categories[0]);
 
   return (
-    <section id="projects" className="py-20 bg-black text-[#faebd7]">
+    <section id="projects" className="py-20 bg-[var(--color-background)] relative">
       <div className="container mx-auto px-6 md:px-20">
-        <h2 className="text-4xl font-bold text-center text-[#ff6347] mb-16">
-          Projects
-        </h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold">
+            <span className="bg-gradient-to-r from-[var(--color-accent)] to-[#ffa99f] bg-clip-text text-transparent">
+              Featured Projects
+            </span>
+          </h2>
+        </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-8 mb-12">
+        {/* Filters */}
+        <div className="flex flex-wrap justify-center gap-4 mb-16">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveTab(category)}
-              className={`text-lg font-medium capitalize relative pb-2 transition-colors ${
-                activeTab === category ? "text-[#ff6347]" : "text-[#faebd7] hover:text-white"
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeTab === category 
+                  ? "bg-[var(--color-accent)] text-white shadow-[0_0_15px_var(--color-accent)]" 
+                  : "bg-[var(--color-card)] text-[var(--color-foreground)] border border-[var(--color-card-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
               }`}
             >
               {category}
-              {activeTab === category && (
-                <motion.div
-                  layoutId="activeProjectTab"
-                  className="absolute bottom-0 left-0 w-full h-[3px] bg-[#ff6347]"
-                />
-              )}
             </button>
           ))}
         </div>
 
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {projectsData[activeTab].map((project, idx) => (
-            <ProjectCard key={idx} project={project} />
-          ))}
+        {/* Grid */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatePresence mode="popLayout">
+            {projectsData[activeTab].map((project, idx) => (
+              <ProjectCard key={project.title} project={project} index={idx} />
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, index }: { project: Project, index: number }) {
   return (
     <motion.div
-      whileHover={{ scale: 1.05 }}
-      className="bg-[#353333] rounded-xl overflow-hidden border border-gray-700 shadow-lg transition-all duration-300"
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="group bg-[var(--color-card)] backdrop-blur-md rounded-2xl overflow-hidden border border-[var(--color-card-border)] hover:border-[var(--color-accent)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(255,90,60,0.15)] flex flex-col h-full"
     >
-      <div className="relative h-48 w-full">
+      <div className="relative h-56 w-full overflow-hidden">
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10" />
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/azerty.webp";
+          }}
         />
       </div>
-      <div className="p-6">
-        <span className="text-xs text-gray-400 uppercase tracking-wider">
-          {project.category}
-        </span>
-        <h4 className="text-xl font-bold text-white mt-2 mb-3">
+      <div className="p-6 flex flex-col flex-grow">
+        <h4 className="text-xl font-bold text-[var(--color-foreground)] mb-3 group-hover:text-[var(--color-accent)] transition-colors">
           {project.title}
         </h4>
-        <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+        <p className="text-[var(--color-foreground)] opacity-70 text-sm mb-6 flex-grow leading-relaxed">
           {project.description}
         </p>
+        
+        <div className="flex flex-wrap gap-2 mb-6 mt-auto">
+          {project.tags.map(tag => (
+            <span key={tag} className="text-xs px-3 py-1 bg-black/40 text-[var(--color-foreground)] opacity-80 rounded-full border border-[var(--color-card-border)]">
+              {tag}
+            </span>
+          ))}
+        </div>
+        
         <a
           href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block text-[#ff6347] font-medium hover:text-[#a52a2a] transition-colors"
+          className="inline-flex items-center gap-2 text-[var(--color-accent)] font-medium hover:text-[var(--color-accent-hover)] transition-colors w-fit"
         >
-          More Details &rarr;
+          View Project <span className="text-lg group-hover:translate-x-1 transition-transform">&rarr;</span>
         </a>
       </div>
     </motion.div>
