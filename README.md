@@ -2,7 +2,7 @@
 
 A modern, minimal, and highly interactive developer portfolio built with **React**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**. Designed specifically to showcase my journey, projects, and skills as a Data & Full-Stack Engineering student at ENSA Al Hoceima.
 
-![Portfolio Preview](./public/portfolio.ong)
+![Portfolio Preview](./public/portfolio.png)
 
 ## ✨ Features
 
