@@ -4,22 +4,13 @@ import { useState, useEffect } from "react";
 
 const codeSnippet = `class SoufianeBouziani:
     def __init__(self):
-        self.name    = "Soufiane Bouziani"
-        self.role    = "Data & Full-Stack Engineer"
-        self.school  = "ENSA Al Hoceima"
-        self.stack = {
-            "data":    ["Kafka", "Airflow", "dbt",
-                        "Spark", "Snowflake", "Trino"],
-            "backend": ["Spring Boot", "JWT", "REST APIs"],
-            "frontend":["React", "TypeScript", "Next.js"],
-            "db":      ["PostgreSQL", "MySQL", "HDFS"],
-        }
+        self.name  = "Soufiane Bouziani"
+        self.role  = "Data & Full-Stack Engineer"
+        self.stack = ["Kafka", "Airflow", "dbt",
+                      "Spring Boot", "React", "SQL"]
 
-    def build_pipelines(self):
-        return "Medallion Architecture · 50K+ events/day"
-
-    def ship_products(self):
-        return "Full-stack apps · secured APIs · dashboards"
+    def build(self):
+        return "50K+ events/day · Medallion Architecture"
 
     def execute(self):
         while True:
@@ -141,7 +132,7 @@ export default function Hero() {
               </div>
 
               {/* Code area */}
-              <div className="p-6 font-mono text-xs sm:text-sm leading-loose text-gray-300 min-h-[380px] overflow-x-auto">
+              <div className="p-6 font-mono text-xs sm:text-sm leading-loose text-gray-300 min-h-[280px] overflow-x-auto">
                 <pre className="whitespace-pre-wrap">
                   <code>
                     {/* Static first line with syntax highlight */}
